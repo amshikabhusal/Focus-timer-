@@ -1,94 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .login-container {
-      background-color: #fff;
-      padding: 30px 40px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      width: 300px;
-    }
-
-    .login-container h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 14px;
-      color: #555;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      margin-top: 5px;
-    }
-
-    .login-button {
-      width: 100%;
-      padding: 10px;
-      background-color: #0066cc;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .login-button:hover {
-      background-color: #0055aa;
-    }
-
-    .register-link {
-      display: block;
-      text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bee - Sign In</title>
+    <link rel="stylesheet" href="landing.css">
 </head>
-<body>
-
-  <div class="login-container">
-    <h2>Login</h2>
-    <form action="/login" method="POST">
-      <div class="form-group">
-        <label for="username">Username or Email</label>
-        <input type="text" id="username" name="username" required />
-      </div>
-
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required />
-      </div>
-
-      <button type="submit" class="login-button">Log In</button>
-    </form>
-
-    <a href="/register" class="register-link">Don't have an account? Register</a>
-  </div>
-
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-form">
+            <div class="logo-section">
+                <div class="profile-image small"></div>
+                <h2>Welcome Back to Bee</h2>
+                <p>Sign in to continue your focused journey</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Don't have an account? <a href="#" id="signupLink">Sign up</a></p>
+                <p><a href="index.html">← Back to Home</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="auth.js"></script>
 </body>
 </html>

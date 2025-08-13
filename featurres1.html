@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Timer App Features</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #191a1b;
+            --secondary-color: #f7b500;
+            --background-color: #f4f7f6;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .features-container {
+            max-width: 800px;
+            width: 100%;
+            background-color: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px var(--shadow-color);
+            padding: 40px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            width: 70%;
+            height: 4px;
+            background-color: var(--secondary-color);
+            position: absolute;
+            bottom: -10px;
+            left: 15%;
+            border-radius: 2px;
+        }
+
+        p.subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            background-color: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-right: 20px;
+            width: 40px;
+            text-align: center;
+        }
+
+        .feature-content h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .feature-content p {
+            margin: 5px 0 0;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Icons from a simple source */
+        .icon-timer::before { content: "⏱️"; }
+        .icon-todo::before { content: "✅"; }
+        .icon-mood::before { content: "😊"; }
+    </style>
+</head>
+<body>
+
+    <div class="features-container">
+        <h1>App Features</h1>
+        <p class="subtitle">A brief look at the core functionalities of our focus timer application.</p>
+        
+        <div class="feature-list">
+            
+            <div class="feature-item">
+                <div class="feature-icon icon-timer"></div>
+                <div class="feature-content">
+                    <h3>Pomodoro Timer</h3>
+                    <p>Utilize the Pomodoro Technique to work in focused intervals. Customize session lengths for both work and short breaks to maximize productivity.</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon icon-todo"></div>
+                <div class="feature-content">
+                    <h3>Integrated To-Do List</h3>
+                    <p>Keep track of your tasks directly within the app. Add, edit, and check off items as you complete them, helping you stay organized and on top of your work.</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon icon-mood"></div>
+                <div class="feature-content">
+                    <h3>Daily Mood Tracker</h3>
+                    <p>Record your mood at the beginning or end of each focus session. This feature helps you gain insight into how your emotional state affects your productivity over time.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

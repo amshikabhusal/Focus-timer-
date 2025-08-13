@@ -1,0 +1,387 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  transition: background-color 0.5s ease;
+  background: linear-gradient(135deg, #f0f2f5 0%, #e8ecf1 100%);
+}
+
+header {
+  background: #ffffff;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 1.2rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: bold;
+  color: #444;
+}
+
+input[type="number"] {
+  width: 70px;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 5px;
+  text-align: center;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#timer {
+  font-size: 5rem;
+  padding: 30px 50px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 6px 6px 12px #ccc, -6px -6px 12px #fff;
+  color: #333;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+}
+
+footer {
+  background: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.mood-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mood-container label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.mood-input {
+  width: 200px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#startStopBtn {
+  background-color: #007bff;
+  color: white;
+}
+
+#startStopBtn:hover {
+  background-color: #0056b3;
+}
+
+#moodBtn {
+  background-color: #28a745;
+  color: #fff;
+}
+
+#moodBtn:hover {
+  background-color: #1e7e34;
+}
+
+#todoBtn {
+  background-color: #ffc107;
+  color: #000;
+}
+
+#todoBtn:hover {
+  background-color: #e0a800;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 0;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.close {
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.close:hover {
+  opacity: 0.7;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+/* Todo Styles */
+.todo-input-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.todo-input-section input {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.todo-input-section select {
+  padding: 10px;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  background: white;
+}
+
+.todo-input-section button {
+  background: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.todo-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  border: 2px solid #e9ecef;
+  border-radius: 20px;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.filter-btn.active {
+  border-color: #667eea;
+  background: #667eea;
+  color: white;
+}
+
+.todo-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  margin-bottom: 8px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+  transition: all 0.3s ease;
+}
+
+.todo-item.completed {
+  opacity: 0.7;
+  border-left-color: #28a745;
+}
+
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+}
+
+.todo-item.high {
+  border-left-color: #dc3545;
+}
+
+.todo-item.medium {
+  border-left-color: #ffc107;
+}
+
+.todo-item.low {
+  border-left-color: #6c757d;
+}
+
+.todo-text {
+  flex: 1;
+  font-size: 1rem;
+}
+
+.todo-priority {
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.todo-priority.high {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+.todo-priority.medium {
+  background: rgba(255, 193, 7, 0.1);
+  color: #ffc107;
+}
+
+.todo-priority.low {
+  background: rgba(108, 117, 125, 0.1);
+  color: #6c757d;
+}
+
+.todo-delete {
+  background: none;
+  border: none;
+  color: #dc3545;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.todo-delete:hover {
+  background: rgba(220, 53, 69, 0.1);
+}
+
+/* Mood History Styles */
+.mood-history {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.mood-entry {
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.mood-entry-date {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.mood-entry-text {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 20px;
+    padding: 15px;
+  }
+
+  #timer {
+    font-size: 3.5rem;
+    padding: 20px 30px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .mood-input {
+    width: 250px;
+  }
+
+  .modal-content {
+    width: 95%;
+    margin: 10% auto;
+  }
+
+  .todo-input-section {
+    flex-direction: column;
+  }
+
+  .todo-input-section input,
+  .todo-input-section select {
+    min-width: auto;
+  }
+}

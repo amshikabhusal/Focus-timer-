@@ -1,112 +1,500 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Focus Training To-Do</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Enhanced To-Do List</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f4f8;
-      margin: 0;
-      padding: 20px;
+      font-family: system-ui, sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      background: #f9fafb;
       color: #333;
     }
-
     h1 {
-      text-align: center;
-      color: #2c3e50;
-    }
-
-    .section {
-      margin-bottom: 30px;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .section h2 {
-      border-bottom: 2px solid #3498db;
-      padding-bottom: 5px;
-      color: #3498db;
-    }
-
-    ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
-
-    li {
-      margin: 10px 0;
       display: flex;
       align-items: center;
+      gap: 0.5rem;
+      font-size: 2rem;
+      margin-bottom: 1rem;
     }
-
-    input[type="checkbox"] {
-      margin-right: 10px;
-      transform: scale(1.2);
+    button {
+      cursor: pointer;
     }
-
-    .checked {
+    input, select {
+      padding: 0.3rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    input:focus, select:focus {
+      outline: 2px solid #3b82f6;
+    }
+    .task {
+      background: white;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.05);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .task.completed .text {
       text-decoration: line-through;
-      color: gray;
+      color: #999;
+    }
+    .task .left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 1;
+    }
+    .task .text {
+      flex: 1;
+      font-size: 1rem;
+    }
+    .priority-low {
+      background: #d1fae5;
+      color: #065f46;
+      border-radius: 4px;
+      padding: 0 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid #a7f3d0;
+      user-select: none;
+    }
+    .priority-medium {
+      background: #fef3c7;
+      color: #92400e;
+      border-radius: 4px;
+      padding: 0 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid #fde68a;
+      user-select: none;
+    }
+    .priority-high {
+      background: #fee2e2;
+      color: #991b1b;
+      border-radius: 4px;
+      padding: 0 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid #fca5a5;
+      user-select: none;
+    }
+    .category {
+      background: #e0e7ff;
+      color: #3730a3;
+      border-radius: 4px;
+      padding: 0 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid #c7d2fe;
+      user-select: none;
+      margin-left: 0.5rem;
+    }
+    .buttons button {
+      border: none;
+      background: none;
+      padding: 0 0.5rem;
+      font-size: 1.1rem;
+      color: #555;
+      transition: color 0.2s;
+    }
+    .buttons button:hover {
+      color: #111;
+    }
+    .stats {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      justify-content: space-around;
+    }
+    .stats > div {
+      background: #e0e7ff;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 700;
+      color: #3730a3;
+      user-select: none;
+      text-align: center;
+      flex: 1;
+    }
+    .filter-buttons {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      justify-content: center;
+    }
+    .filter-buttons button {
+      background: #e0e7ff;
+      border-radius: 6px;
+      border: none;
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+      color: #3730a3;
+      transition: background 0.2s;
+    }
+    .filter-buttons button.active, .filter-buttons button:hover {
+      background: #3730a3;
+      color: white;
+    }
+    form {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    form input[type="text"] {
+      flex: 2 1 200px;
+    }
+    form select {
+      flex: 1 1 100px;
+    }
+    form button {
+      flex: 1 1 80px;
+      background: #3b82f6;
+      color: white;
+      border-radius: 6px;
+      border: none;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+    form button:hover {
+      background: #2563eb;
+    }
+    .edit-input {
+      flex: 1;
+      font-size: 1rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .edit-buttons button {
+      margin-left: 0.5rem;
+      background: #3b82f6;
+      color: white;
+      
+      border-radius: 6px;
+      border: none;
+      padding: 0.3rem 0.6rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .edit-buttons button.cancel {
+      background: #ef4444;
+    }
+    .edit-buttons button:hover {
+      filter: brightness(0.9);
     }
   </style>
 </head>
 <body>
+  <h1>📝To-Do List</h1>
 
-  <h1>🧠 Focus Training To-Do List</h1>
-
-  <div class="section" id="daily">
-    <h2>🗓️ Daily Focus Routine</h2>
-    <ul>
-      <li><input type="checkbox" id="task1"><label for="task1">Set daily focus goal</label></li>
-      <li><input type="checkbox" id="task2"><label for="task2">10-minute meditation session</label></li>
-      <li><input type="checkbox" id="task3"><label for="task3">Complete 1 Pomodoro cycle</label></li>
-      <li><input type="checkbox" id="task4"><label for="task4">Identify & eliminate top 1 distraction</label></li>
-      <li><input type="checkbox" id="task5"><label for="task5">Journal short reflection on focus level</label></li>
-    </ul>
+  <div class="stats" aria-live="polite" aria-atomic="true">
+    <div id="totalTasks">Total: 0</div>
+    <div id="completedTasks">Completed: 0</div>
+    <div id="pendingTasks">Pending: 0</div>
+    <div id="highPriorityTasks">High Priority: 0</div>
   </div>
 
-  <div class="section" id="weekly">
-    <h2>🔁 Weekly Training Tasks</h2>
-    <ul>
-      <li><input type="checkbox" id="task6"><label for="task6">Do a 90-minute deep work session</label></li>
-      <li><input type="checkbox" id="task7"><label for="task7">Review focus journal entries</label></li>
-      <li><input type="checkbox" id="task8"><label for="task8">Try a new focus technique</label></li>
-      <li><input type="checkbox" id="task9"><label for="task9">Digital detox for 3 hours</label></li>
-      <li><input type="checkbox" id="task10"><label for="task10">Evaluate workspace for distractions</label></li>
-    </ul>
+  <div class="filter-buttons" role="group" aria-label="Filter tasks">
+    <button type="button" data-filter="all" class="active">All</button>
+    <button type="button" data-filter="pending">Pending</button>
+    <button type="button" data-filter="completed">Completed</button>
   </div>
 
-  <div class="section" id="longterm">
-    <h2>🎯 Long-Term Goals</h2>
-    <ul>
-      <li><input type="checkbox" id="task11"><label for="task11">Build up to 3+ hours of daily focused work</label></li>
-      <li><input type="checkbox" id="task12"><label for="task12">Maintain a distraction log for 30 days</label></li>
-      <li><input type="checkbox" id="task13"><label for="task13">Complete a 7-day digital minimalism challenge</label></li>
-      <li><input type="checkbox" id="task14"><label for="task14">Read a book on focus (e.g., Deep Work)</label></li>
-    </ul>
-  </div>
+  <form id="taskForm" aria-label="Add new task">
+    <input type="text" id="taskInput" placeholder="Add a new task..." aria-required="true" />
+    <select id="prioritySelect" aria-label="Select priority">
+      <option value="low">Low</option>
+      <option value="medium" selected>Medium</option>
+      <option value="high">High</option>
+    </select>
+    <select id="categorySelect" aria-label="Select category">
+      <option>Personal</option>
+      <option>Work</option>
+      <option>Shopping</option>
+      <option>Health</option>
+      <option>Other</option>
+    </select>
+    <button type="submit" aria-label="Add task">Add</button>
+  </form>
+
+  <div id="tasksContainer" role="list" aria-live="polite"></div>
 
   <script>
-    // Save and load task states using localStorage
-    document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
-      const id = checkbox.id;
-      // Load state
-      const saved = localStorage.getItem(id);
-      if (saved === "true") {
-        checkbox.checked = true;
-        checkbox.parentElement.querySelector('label').classList.add("checked");
+    (() => {
+      const STORAGE_KEY = "enhancedTodoTasks";
+
+      let tasks = [];
+      let filter = "all"; // all | pending | completed
+      let editingId = null;
+
+      const totalTasksEl = document.getElementById("totalTasks");
+      const completedTasksEl = document.getElementById("completedTasks");
+      const pendingTasksEl = document.getElementById("pendingTasks");
+      const highPriorityTasksEl = document.getElementById("highPriorityTasks");
+
+      const tasksContainer = document.getElementById("tasksContainer");
+      const taskForm = document.getElementById("taskForm");
+      const taskInput = document.getElementById("taskInput");
+      const prioritySelect = document.getElementById("prioritySelect");
+      const categorySelect = document.getElementById("categorySelect");
+      const filterButtons = document.querySelectorAll(".filter-buttons button");
+
+      // Load from localStorage
+      function loadTasks() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          try {
+            tasks = JSON.parse(saved).map(t => ({
+              ...t,
+              createdAt: new Date(t.createdAt),
+              completedAt: t.completedAt ? new Date(t.completedAt) : null,
+            }));
+          } catch {
+            tasks = [];
+          }
+        }
       }
 
-      // Save state on change
-      checkbox.addEventListener("change", () => {
-        localStorage.setItem(id, checkbox.checked);
-        checkbox.parentElement.querySelector('label').classList.toggle("checked", checkbox.checked);
-      });
-    });
-  </script>
+      // Save to localStorage
+      function saveTasks() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+      }
 
+      // Render stats
+      function renderStats() {
+        const total = tasks.length;
+        const completed = tasks.filter(t => t.completed).length;
+        const pending = total - completed;
+        const highPriority = tasks.filter(t => t.priority === "high" && !t.completed).length;
+
+        totalTasksEl.textContent = `Total: ${total}`;
+        completedTasksEl.textContent = `Completed: ${completed}`;
+        pendingTasksEl.textContent = `Pending: ${pending}`;
+        highPriorityTasksEl.textContent = `High Priority: ${highPriority}`;
+      }
+
+      // Create a task DOM element
+      function createTaskElement(task) {
+        const div = document.createElement("div");
+        div.className = "task" + (task.completed ? " completed" : "");
+        div.setAttribute("role", "listitem");
+        div.dataset.id = task.id;
+
+        if (editingId === task.id) {
+          // Edit mode
+          const input = document.createElement("input");
+          input.type = "text";
+          input.className = "edit-input";
+          input.value = task.text;
+          input.setAttribute("aria-label", "Edit task text");
+          input.addEventListener("keydown", e => {
+            if (e.key === "Enter") {
+              saveEdit(task.id, input.value.trim());
+            }
+            if (e.key === "Escape") {
+              cancelEdit();
+            }
+          });
+
+          const btnSave = document.createElement("button");
+          btnSave.textContent = "Save";
+          btnSave.className = "edit-buttons";
+          btnSave.addEventListener("click", () => saveEdit(task.id, input.value.trim()));
+
+          const btnCancel = document.createElement("button");
+          btnCancel.textContent = "Cancel";
+          btnCancel.className = "edit-buttons cancel";
+          btnCancel.addEventListener("click", cancelEdit);
+
+          const container = document.createElement("div");
+          container.style.display = "flex";
+          container.style.gap = "0.5rem";
+          container.style.flex = "1";
+
+          container.appendChild(input);
+          container.appendChild(btnSave);
+          container.appendChild(btnCancel);
+
+          div.appendChild(container);
+          return div;
+        }
+
+        // Normal view mode
+        const leftDiv = document.createElement("div");
+        leftDiv.className = "left";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = task.completed;
+        checkbox.setAttribute("aria-label", "Mark task complete");
+        checkbox.addEventListener("change", () => toggleTask(task.id));
+        leftDiv.appendChild(checkbox);
+
+        const textSpan = document.createElement("span");
+        textSpan.className = "text";
+        textSpan.textContent = task.text;
+        leftDiv.appendChild(textSpan);
+
+        const prioritySpan = document.createElement("span");
+        prioritySpan.className = "priority-" + task.priority;
+        prioritySpan.textContent = task.priority.charAt(0).toUpperCase() + task.priority.slice(1);
+        leftDiv.appendChild(prioritySpan);
+
+        const categorySpan = document.createElement("span");
+        categorySpan.className = "category";
+        categorySpan.textContent = task.category;
+        leftDiv.appendChild(categorySpan);
+
+        div.appendChild(leftDiv);
+
+        // Buttons: edit & delete
+        const btnsDiv = document.createElement("div");
+        btnsDiv.className = "buttons";
+
+        const editBtn = document.createElement("button");
+        editBtn.title = "Edit task";
+        editBtn.setAttribute("aria-label", "Edit task");
+        editBtn.textContent = "✏️";
+        editBtn.addEventListener("click", () => startEdit(task.id));
+        btnsDiv.appendChild(editBtn);
+
+        const delBtn = document.createElement("button");
+        delBtn.title = "Delete task";
+        delBtn.setAttribute("aria-label", "Delete task");
+        delBtn.textContent = "🗑️";
+        delBtn.addEventListener("click", () => deleteTask(task.id));
+        btnsDiv.appendChild(delBtn);
+
+        div.appendChild(btnsDiv);
+
+        return div;
+      }
+
+      // Render task list
+      function renderTasks() {
+        tasksContainer.innerHTML = "";
+        let filteredTasks = tasks;
+        if (filter === "pending") filteredTasks = tasks.filter(t => !t.completed);
+        else if (filter === "completed") filteredTasks = tasks.filter(t => t.completed);
+
+        if (filteredTasks.length === 0) {
+          const empty = document.createElement("p");
+          empty.textContent = filter === "all" ? "No tasks yet." : `No ${filter} tasks.`;
+          empty.style.textAlign = "center";
+          empty.style.color = "#666";
+          tasksContainer.appendChild(empty);
+          return;
+        }
+
+        filteredTasks.forEach(task => {
+          tasksContainer.appendChild(createTaskElement(task));
+        });
+      }
+
+      // Add a new task
+      function addTask(text, priority, category) {
+        if (!text) return;
+        const task = {
+          id: Date.now().toString(),
+          text,
+          completed: false,
+          createdAt: new Date(),
+          completedAt: null,
+          priority,
+          category,
+        };
+        tasks.unshift(task);
+        saveTasks();
+        renderStats();
+        renderTasks();
+      }
+
+      // Toggle completed status
+      function toggleTask(id) {
+        tasks = tasks.map(task => {
+          if (task.id === id) {
+            const completed = !task.completed;
+            return {
+              ...task,
+              completed,
+              completedAt: completed ? new Date() : null,
+            };
+          }
+          return task;
+        });
+        saveTasks();
+        renderStats();
+        renderTasks();
+      }
+
+      // Delete task
+      function deleteTask(id) {
+        if (editingId === id) cancelEdit();
+        tasks = tasks.filter(t => t.id !== id);
+        saveTasks();
+        renderStats();
+        renderTasks();
+      }
+
+      // Start editing
+      function startEdit(id) {
+        if (editingId !== null) return; // only one edit at a time
+        editingId = id;
+        renderTasks();
+      }
+
+      // Save edit
+      function saveEdit(id, newText) {
+        if (!newText) return;
+        tasks = tasks.map(t => (t.id === id ? {...t, text: newText} : t));
+        editingId = null;
+        saveTasks();
+        renderTasks();
+      }
+
+      // Cancel edit
+      function cancelEdit() {
+        editingId = null;
+        renderTasks();
+      }
+
+      // Filter change
+      filterButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          filterButtons.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          filter = btn.dataset.filter;
+          renderTasks();
+        });
+      });
+
+      // Form submit
+      taskForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const text = taskInput.value.trim();
+        if (!text) return alert("Please enter a task.");
+        const priority = prioritySelect.value;
+        const category = categorySelect.value;
+        addTask(text, priority, category);
+        taskInput.value = "";
+        taskInput.focus();
+      });
+
+      // Initialization
+      loadTasks();
+      renderStats();
+      renderTasks();
+    })();
+  </script>
 </body>
 </html>

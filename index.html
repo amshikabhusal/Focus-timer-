@@ -273,9 +273,9 @@
             <div class="">Bee</div>
             <ul class="nav-links">
                
-                <li><a href="#work">features</a></li>
-                <li><a href="C:\xampp\htdocs\Focus Timer\about us.html">About us</a></li>
-                <li><a href="C:\xampp\htdocs\Focus Timer\register.html">create account</a></li>
+                <li><a href="featurres1.html">Features</a></li>
+                <li><a href="aboutus.html">About us</a></li>
+                <li><a href="history.html">History</a></li>
                 
             </ul>
         </nav>
@@ -286,7 +286,7 @@
         <div class="profile-image"></div>
         <h1>Focused work<br> Mindful breaks<br>Better results.</h1>
         <p class="hero-subtitle">Maintain your focus and get things done by working with bee </p>
-        <a href="focus.html"  class="cta-button">start buzzin</a>
+        <a href="signin.php"  class="cta-button">start buzzin</a>
     </section>
 
     <section>
@@ -308,7 +308,7 @@
     </section> -->
 
     <script>
-        // Header scroll effect
+      
         window.addEventListener('scroll', function() {
             const header = document.getElementById('header');
             if (window.scrollY > 100) {
@@ -320,7 +320,7 @@
             }
         });
 
-        // Smooth scroll for navigation links
+        
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -334,7 +334,7 @@
             });
         });
 
-        // Add parallax effect to floating elements
+       
         window.addEventListener('scroll', function() {
             const scrolled = window.pageYOffset;
             const parallaxElements = document.querySelectorAll('.floating-element');
@@ -345,7 +345,7 @@
             });
         });
 
-        // Add hover effect to CTA button
+      
         const ctaButton = document.querySelector('.cta-button');
         ctaButton.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-3px) scale(1.05)';
@@ -355,7 +355,7 @@
             this.style.transform = 'translateY(0) scale(1)';
         });
 
-        // Intersection Observer for animations
+       
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'

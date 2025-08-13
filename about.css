@@ -1,0 +1,136 @@
+/* About Page Specific Styles */
+.about-hero {
+  background: var(--gradient-primary);
+  color: var(--white);
+  padding: 120px var(--spacing-xl) 80px;
+  text-align: center;
+  margin-top: 80px;
+}
+
+.about-hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-lg);
+}
+
+.about-hero .lead {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.about-content {
+  padding: 100px var(--spacing-xl);
+  background: var(--white);
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--spacing-2xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.text-content h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: var(--spacing-xl);
+}
+
+.text-content h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: var(--spacing-2xl) 0 var(--spacing-lg);
+}
+
+.text-content p {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--gray-600);
+  margin-bottom: var(--spacing-lg);
+}
+
+.feature-list {
+  list-style: none;
+  margin: var(--spacing-xl) 0;
+}
+
+.feature-list li {
+  font-size: 1.125rem;
+  color: var(--gray-600);
+  margin-bottom: var(--spacing-md);
+  padding-left: var(--spacing-lg);
+  position: relative;
+}
+
+.feature-list li::before {
+  content: attr(data-icon);
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.cta-box {
+  background: var(--gradient-primary);
+  color: var(--white);
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-xl);
+  text-align: center;
+  margin-top: var(--spacing-2xl);
+}
+
+.cta-box h3 {
+  color: var(--white);
+  margin-bottom: var(--spacing-lg);
+}
+
+.visual-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.stats-showcase {
+  background: var(--gray-50);
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-xl);
+  text-align: center;
+}
+
+.stat-item {
+  margin-bottom: var(--spacing-xl);
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: var(--gray-600);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .about-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .text-content h2 {
+    font-size: 2rem;
+  }
+}
