@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Focus Training To-Do</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    .section {
+      margin-bottom: 30px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .section h2 {
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 5px;
+      color: #3498db;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    li {
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+    }
+
+    .checked {
+      text-decoration: line-through;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 Focus Training To-Do List</h1>
+
+  <div class="section" id="daily">
+    <h2>🗓️ Daily Focus Routine</h2>
+    <ul>
+      <li><input type="checkbox" id="task1"><label for="task1">Set daily focus goal</label></li>
+      <li><input type="checkbox" id="task2"><label for="task2">10-minute meditation session</label></li>
+      <li><input type="checkbox" id="task3"><label for="task3">Complete 1 Pomodoro cycle</label></li>
+      <li><input type="checkbox" id="task4"><label for="task4">Identify & eliminate top 1 distraction</label></li>
+      <li><input type="checkbox" id="task5"><label for="task5">Journal short reflection on focus level</label></li>
+    </ul>
+  </div>
+
+  <div class="section" id="weekly">
+    <h2>🔁 Weekly Training Tasks</h2>
+    <ul>
+      <li><input type="checkbox" id="task6"><label for="task6">Do a 90-minute deep work session</label></li>
+      <li><input type="checkbox" id="task7"><label for="task7">Review focus journal entries</label></li>
+      <li><input type="checkbox" id="task8"><label for="task8">Try a new focus technique</label></li>
+      <li><input type="checkbox" id="task9"><label for="task9">Digital detox for 3 hours</label></li>
+      <li><input type="checkbox" id="task10"><label for="task10">Evaluate workspace for distractions</label></li>
+    </ul>
+  </div>
+
+  <div class="section" id="longterm">
+    <h2>🎯 Long-Term Goals</h2>
+    <ul>
+      <li><input type="checkbox" id="task11"><label for="task11">Build up to 3+ hours of daily focused work</label></li>
+      <li><input type="checkbox" id="task12"><label for="task12">Maintain a distraction log for 30 days</label></li>
+      <li><input type="checkbox" id="task13"><label for="task13">Complete a 7-day digital minimalism challenge</label></li>
+      <li><input type="checkbox" id="task14"><label for="task14">Read a book on focus (e.g., Deep Work)</label></li>
+    </ul>
+  </div>
+
+  <script>
+    // Save and load task states using localStorage
+    document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
+      const id = checkbox.id;
+      // Load state
+      const saved = localStorage.getItem(id);
+      if (saved === "true") {
+        checkbox.checked = true;
+        checkbox.parentElement.querySelector('label').classList.add("checked");
+      }
+
+      // Save state on change
+      checkbox.addEventListener("change", () => {
+        localStorage.setItem(id, checkbox.checked);
+        checkbox.parentElement.querySelector('label').classList.toggle("checked", checkbox.checked);
+      });
+    });
+  </script>
+
+</body>
+</html>

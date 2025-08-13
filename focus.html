@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Focus Timer App</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      background-color: #f0f2f5;
+      transition: background-color 0.4s ease;
+    }
+    nav {
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    nav button {
+      padding: 10px 20px;
+      font-weight: bold;
+      background: #e0e0e0;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    nav button.active {
+      background: #007bff;
+      color: white;
+    }
+    section {
+      display: none;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+      text-align: center;
+    }
+    section.active {
+      display: block;
+    }
+    #timerDisplay {
+      font-size: 4rem;
+      margin: 40px 0 20px;
+    }
+    .input-group {
+      margin-bottom: 20px;
+    }
+    input[type="text"], input[type="number"] {
+      padding: 10px;
+      width: 200px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 2px solid #ccc;
+      text-align: center;
+    }
+    .start-btn {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .start-btn:hover {
+      background-color: #218838;
+    }
+    .setting-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+    .setting-group label {
+      display: flex;
+      flex-direction: column;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <button class="nav-btn active" data-section="timerSection">Focus Timer</button>
+    <button class="nav-btn" data-section="todoSection">Todo</button>
+    <button class="nav-btn" data-section="moodSection">Moodbar</button>
+  </nav>
+
+  <!-- Timer Section -->
+  <section id="timerSection" class="active">
+    <div id="timerDisplay">25:00</div>
+    <button id="startStopBtn" class="start-btn">Start</button>
+  </section>
+
+  <!-- Todo Section -->
+  <section id="todoSection">
+    <div class="input-group">
+      <input type="text" id="todoInput" placeholder="Enter a task..."/>
+    </div>
+    <p><em>(Todo list functionality coming soon)</em></p>
+    <!-- Settings below -->
+    <div class="setting-group">
+      <label>
+        Pomodoro (min)
+        <input type="number" id="pomodoroInput" value="25" min="1"/>
+      </label>
+      <label>
+        Short Break
+        <input type="number" id="shortInput" value="5" min="1"/>
+      </label>
+      <label>
+        Long Break
+        <input type="number" id="longInput" value="15" min="1"/>
+      </label>
+    </div>
+  </section>
+
+  <!-- Moodbar Section -->
+  <section id="moodSection">
+    <div class="input-group">
+      <input type="text" id="moodInput" placeholder="Type a mood or URL"/>
+    </div>
+    <p><em>Try moods like: happy, calm, excited...</em></p>
+    <!-- Settings below -->
+    <div class="setting-group">
+      <label>
+        Pomodoro (min)
+        <input type="number" value="25" disabled/>
+      </label>
+      <label>
+        Short Break
+        <input type="number" value="5" disabled/>
+      </label>
+      <label>
+        Long Break
+        <input type="number" value="15" disabled/>
+      </label>
+    </div>
+  </section>
+
+  <!-- Script -->
+  <script>
+    // Mood Colors
+    const moodColors = {
+      happy: "#d4f9c1",
+      sad: "#dee2ff",
+      angry: "#f8d7da",
+      tired: "#e0d6f5",
+      calm: "#c3f5ff",
+      excited: "#fff3cd",
+      relaxed: "#d4f5e9",
+      focused: "#e2f0cb"
+    };
+
+    // Sections
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('section');
+
+    navButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        navButtons.forEach(b => b.classList.remove('active'));
+        sections.forEach(s => s.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.section).classList.add('active');
+      });
+    });
+
+    // Timer
+    let timer;
+    let isRunning = false;
+    let timeRemaining = 25 * 60;
+    const display = document.getElementById('timerDisplay');
+    const startStopBtn = document.getElementById('startStopBtn');
+    const pomodoroInput = document.getElementById('pomodoroInput');
+
+    function updateDisplay() {
+      const mins = Math.floor(timeRemaining / 60);
+      const secs = timeRemaining % 60;
+      display.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    startStopBtn.addEventListener('click', () => {
+      if (!isRunning) {
+        timeRemaining = pomodoroInput.value * 60;
+        updateDisplay();
+        timer = setInterval(() => {
+          if (timeRemaining > 0) {
+            timeRemaining--;
+            updateDisplay();
+          } else {
+            clearInterval(timer);
+            alert("Time's up!");
+            isRunning = false;
+            startStopBtn.textContent = "Start";
+          }
+        }, 1000);
+        startStopBtn.textContent = "Stop";
+        isRunning = true;
+      } else {
+        clearInterval(timer);
+        startStopBtn.textContent = "Start";
+        isRunning = false;
+      }
+    });
+
+    // Mood Input
+    const moodInput = document.getElementById('moodInput');
+    moodInput.addEventListener('input', () => {
+      const val = moodInput.value.trim().toLowerCase();
+      if (moodColors[val]) {
+        document.body.style.backgroundColor = moodColors[val];
+        moodInput.style.color = "#000";
+        moodInput.style.cursor = "text";
+        moodInput.onclick = null;
+      } else if (val.startsWith("http://") || val.startsWith("https://")) {
+        document.body.style.backgroundColor = "#f0f2f5";
+        moodInput.style.color = "#007bff";
+        moodInput.style.cursor = "pointer";
+        moodInput.onclick = () => window.open(val, '_blank');
+      } else {
+        document.body.style.backgroundColor = "#f0f2f5";
+        moodInput.style.color = "#000";
+        moodInput.style.cursor = "text";
+        moodInput.onclick = null;
+      }
+    });
+
+    updateDisplay(); // Initial display
+  </script>
+</body>
+</html>

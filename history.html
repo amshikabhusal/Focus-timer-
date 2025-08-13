@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Time History</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8fafc;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4facfe;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .controls {
+            padding: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            color: #64748b;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            border-color: #4facfe;
+            color: #4facfe;
+        }
+
+        .filter-btn.active {
+            background: #4facfe;
+            border-color: #4facfe;
+            color: white;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .export-btn {
+            background: #10b981;
+            color: white;
+        }
+
+        .export-btn:hover {
+            background: #059669;
+        }
+
+        .clear-btn {
+            background: #ef4444;
+            color: white;
+        }
+
+        .clear-btn:hover {
+            background: #dc2626;
+        }
+
+        .history-list {
+            padding: 30px;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 4px solid #4facfe;
+            transition: all 0.3s ease;
+        }
+
+        .history-item:hover {
+            background: #f1f5f9;
+            transform: translateX(5px);
+        }
+
+        .session-info {
+            flex: 1;
+        }
+
+        .session-duration {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .session-date {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .session-type {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+
+        .delete-btn {
+            background: #fee2e2;
+            color: #dc2626;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #fecaca;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .controls {
+                padding: 20px;
+            }
+
+            .filter-buttons {
+                justify-content: center;
+            }
+
+            .history-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .delete-btn {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Focus Time History</h1>
+            <p>Track your productivity and focus sessions</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalSessions">0</div>
+                <div class="stat-label">Total Sessions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalTime">0h 0m</div>
+                <div class="stat-label">Total Focus Time</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="averageSession">0m</div>
+                <div class="stat-label">Average Session</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="currentStreak">0</div>
+                <div class="stat-label">Current Streak</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="today">Today</button>
+                <button class="filter-btn" data-filter="week">This Week</button>
+                <button class="filter-btn" data-filter="month">This Month</button>
+            </div>
+           
+            <div class="action-buttons">
+                <button class="action-btn export-btn" id="exportBtn">Export Data</button>
+                <button class="action-btn clear-btn" id="clearAllBtn">Clear All History</button>
+            </div>
+        </div>
+
+        <div class="history-list" id="historyList">
+            <!-- Sessions will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // <CHANGE> Added complete JavaScript functionality for all buttons and interactions
+        class FocusHistoryManager {
+            constructor() {
+                this.sessions = this.loadSessions();
+                this.currentFilter = 'all';
+                this.init();
+            }
+
+            init() {
+                this.renderSessions();
+                this.updateStats();
+                this.bindEvents();
+               
+                // Add some sample data if no sessions exist
+                if (this.sessions.length === 0) {
+                    this.addSampleData();
+                }
+            }
+
+            addSampleData() {
+                const sampleSessions = [
+                    { id: 1, duration: 25, date: new Date(), type: 'Pomodoro' },
+                    { id: 2, duration: 45, date: new Date(Date.now() - 86400000), type: 'Deep Work' },
+                    { id: 3, duration: 30, date: new Date(Date.now() - 172800000), type: 'Study' },
+                    { id: 4, duration: 60, date: new Date(Date.now() - 259200000), type: 'Deep Work' },
+                    { id: 5, duration: 15, date: new Date(Date.now() - 345600000), type: 'Break Focus' }
+                ];
+                this.sessions = sampleSessions;
+                this.saveSessions();
+                this.renderSessions();
+                this.updateStats();
+            }
+
+            loadSessions() {
+                const saved = localStorage.getItem('focusSessions');
+                return saved ? JSON.parse(saved) : [];
+            }
+
+            saveSessions() {
+                localStorage.setItem('focusSessions', JSON.stringify(this.sessions));
+            }
+
+            bindEvents() {
+                // Filter buttons
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                        this.currentFilter = e.target.dataset.filter;
+                        this.renderSessions();
+                    });
+                });
+
+                // Export button
+                document.getElementById('exportBtn').addEventListener('click', () => {
+                    this.exportData();
+                });
+
+                // Clear all button
+                document.getElementById('clearAllBtn').addEventListener('click', () => {
+                    if (confirm('Are you sure you want to clear all history? This action cannot be undone.')) {
+                        this.clearAllSessions();
+                    }
+                });
+            }
+
+            filterSessions() {
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const weekStart = new Date(today.getTime() - (today.getDay() * 24 * 60 * 60 * 1000));
+                const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+
+                return this.sessions.filter(session => {
+                    const sessionDate = new Date(session.date);
+                   
+                    switch (this.currentFilter) {
+                        case 'today':
+                            return sessionDate >= today;
+                        case 'week':
+                            return sessionDate >= weekStart;
+                        case 'month':
+                            return sessionDate >= monthStart;
+                        default:
+                            return true;
+                    }
+                });
+            }
+
+            renderSessions() {
+                const historyList = document.getElementById('historyList');
+                const filteredSessions = this.filterSessions();
+
+                if (filteredSessions.length === 0) {
+                    historyList.innerHTML = `
+                        <div class="empty-state">
+                            <h3>No sessions found</h3>
+                            <p>Start a focus session to see your history here.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                historyList.innerHTML = filteredSessions
+                    .sort((a, b) => new Date(b.date) - new Date(a.date))
+                    .map(session => `
+                        <div class="history-item" data-id="${session.id}">
+                            <div class="session-info">
+                                <div class="session-duration">${session.duration} minutes</div>
+                                <div class="session-date">${this.formatDate(session.date)}</div>
+                                <span class="session-type">${session.type}</span>
+                            </div>
+                            <button class="delete-btn" onclick="focusManager.deleteSession(${session.id})">Delete</button>
+                        </div>
+                    `).join('');
+            }
+
+            deleteSession(id) {
+                if (confirm('Are you sure you want to delete this session?')) {
+                    this.sessions = this.sessions.filter(session => session.id !== id);
+                    this.saveSessions();
+                    this.renderSessions();
+                    this.updateStats();
+                }
+            }
+
+            clearAllSessions() {
+                this.sessions = [];
+                this.saveSessions();
+                this.renderSessions();
+                this.updateStats();
+            }
+
+            exportData() {
+                const dataStr = JSON.stringify(this.sessions, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(dataBlob);
+               
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `focus-history-${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }
+
+            updateStats() {
+                const totalSessions = this.sessions.length;
+                const totalMinutes = this.sessions.reduce((sum, session) => sum + session.duration, 0);
+                const averageSession = totalSessions > 0 ? Math.round(totalMinutes / totalSessions) : 0;
+                const currentStreak = this.calculateStreak();
+
+                document.getElementById('totalSessions').textContent = totalSessions;
+                document.getElementById('totalTime').textContent = this.formatDuration(totalMinutes);
+                document.getElementById('averageSession').textContent = `${averageSession}m`;
+                document.getElementById('currentStreak').textContent = currentStreak;
+            }
+
+            calculateStreak() {
+                if (this.sessions.length === 0) return 0;
+               
+                const sortedSessions = this.sessions
+                    .sort((a, b) => new Date(b.date) - new Date(a.date));
+               
+                let streak = 0;
+                let currentDate = new Date();
+                currentDate.setHours(0, 0, 0, 0);
+               
+                for (let session of sortedSessions) {
+                    const sessionDate = new Date(session.date);
+                    sessionDate.setHours(0, 0, 0, 0);
+                   
+                    const daysDiff = Math.floor((currentDate - sessionDate) / (1000 * 60 * 60 * 24));
+                   
+                    if (daysDiff === streak) {
+                        streak++;
+                        currentDate.setDate(currentDate.getDate() - 1);
+                    } else if (daysDiff > streak) {
+                        break;
+                    }
+                }
+               
+                return streak;
+            }
+
+            formatDuration(minutes) {
+                const hours = Math.floor(minutes / 60);
+                const mins = minutes % 60;
+                return `${hours}h ${mins}m`;
+            }
+
+            formatDate(date) {
+                const sessionDate = new Date(date);
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+
+                if (sessionDate >= today) {
+                    return `Today at ${sessionDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+                } else if (sessionDate >= yesterday) {
+                    return `Yesterday at ${sessionDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+                } else {
+                    return sessionDate.toLocaleDateString() + ' at ' + sessionDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                }
+            }
+        }
+
+        // Initialize the focus history manager
+        const focusManager = new FocusHistoryManager();
+    </script>
+</body>
+</html>
