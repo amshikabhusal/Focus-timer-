@@ -1,4 +1,4 @@
-// Mood tracking functionality
+
 class MoodTracker {
   constructor() {
     this.moods = JSON.parse(localStorage.getItem("moods") || "[]")
@@ -86,7 +86,7 @@ class MoodTracker {
     this.moodInput.style.backgroundColor = ""
     document.body.style.background = ""
 
-    // Send mood data to backend
+    
     this.sendMoodToBackend(mood)
   }
 
@@ -132,7 +132,7 @@ class MoodTracker {
   }
 
   sendMoodToBackend(mood) {
-    // Send mood data to PHP backend
+   
     fetch("api.php", {
       method: "POST",
       headers: {
@@ -181,7 +181,7 @@ class MoodTracker {
   }
 }
 
-// Initialize mood tracker when page loads
+
 document.addEventListener("DOMContentLoaded", () => {
   window.moodTracker = new MoodTracker()
 })

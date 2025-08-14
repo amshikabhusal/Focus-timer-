@@ -292,12 +292,12 @@
         </div>
 
         <div class="history-list" id="historyList">
-            <!-- Sessions will be populated by JavaScript -->
+           
         </div>
     </div>
 
     <script>
-        // <CHANGE> Added complete JavaScript functionality for all buttons and interactions
+        
         class FocusHistoryManager {
             constructor() {
                 this.sessions = this.loadSessions();
@@ -310,7 +310,6 @@
                 this.updateStats();
                 this.bindEvents();
                
-                // Add some sample data if no sessions exist
                 if (this.sessions.length === 0) {
                     this.addSampleData();
                 }
@@ -340,7 +339,7 @@
             }
 
             bindEvents() {
-                // Filter buttons
+                /
                 document.querySelectorAll('.filter-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -350,12 +349,11 @@
                     });
                 });
 
-                // Export button
                 document.getElementById('exportBtn').addEventListener('click', () => {
                     this.exportData();
                 });
 
-                // Clear all button
+                
                 document.getElementById('clearAllBtn').addEventListener('click', () => {
                     if (confirm('Are you sure you want to clear all history? This action cannot be undone.')) {
                         this.clearAllSessions();
@@ -504,7 +502,7 @@
             }
         }
 
-        // Initialize the focus history manager
+   
         const focusManager = new FocusHistoryManager();
     </script>
 </body>

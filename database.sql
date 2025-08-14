@@ -1,8 +1,9 @@
--- Create database
+
+
 CREATE DATABASE IF NOT EXISTS focus_timer;
 USE focus_timer;
 
--- Users table
+
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -11,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Moods table
+
 CREATE TABLE IF NOT EXISTS moods (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -21,7 +22,7 @@ CREATE TABLE IF NOT EXISTS moods (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Pomodoro sessions table
+
 CREATE TABLE IF NOT EXISTS pomodoro_sessions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -31,7 +32,6 @@ CREATE TABLE IF NOT EXISTS pomodoro_sessions (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Todos table
 CREATE TABLE IF NOT EXISTS todos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS todos (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Insert default user for demo
+
 INSERT INTO users (email, password, name) VALUES 
 ('demo@example.com', 'password123', 'Demo User')
 ON DUPLICATE KEY UPDATE email = email;

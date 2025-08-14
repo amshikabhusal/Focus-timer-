@@ -29,7 +29,7 @@ if ($_POST) {
             $_SESSION['user_id'] = $user_id;
             $_SESSION['user_email'] = $email;
             $_SESSION['user_name'] = $name;
-            header('Location: focus.html');
+            header('Location: signin.php');
             exit;
         } else {
             $error = 'Failed to create account. Please try again.';

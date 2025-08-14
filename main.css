@@ -1,4 +1,4 @@
-/* Reset and Base Styles */
+
 * {
   margin: 0;
   padding: 0;
@@ -6,17 +6,19 @@
 }
 
 :root {
-  /* Primary Colors */
+
+  
   --primary-color: #6366f1;
   --primary-dark: #4f46e5;
   --primary-light: #818cf8;
 
-  /* Secondary Colors */
+
+  
   --secondary-color: #f59e0b;
   --secondary-dark: #d97706;
   --secondary-light: #fbbf24;
 
-  /* Neutral Colors */
+  
   --white: #ffffff;
   --gray-50: #f9fafb;
   --gray-100: #f3f4f6;
@@ -29,28 +31,29 @@
   --gray-800: #1f2937;
   --gray-900: #111827;
 
-  /* Status Colors */
+ 
+  
   --success: #10b981;
   --warning: #f59e0b;
   --error: #ef4444;
   --info: #3b82f6;
 
-  /* Gradients */
+  
   --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
   --gradient-secondary: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-dark) 100%);
   --gradient-bg: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
 
-  /* Shadows */
+ 
+  
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
-  /* Typography */
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   --font-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
 
-  /* Spacing */
+ 
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
@@ -58,14 +61,14 @@
   --spacing-xl: 2rem;
   --spacing-2xl: 3rem;
 
-  /* Border Radius */
+  
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
   --radius-full: 9999px;
 
-  /* Transitions */
+
   --transition-fast: 0.15s ease;
   --transition-normal: 0.3s ease;
   --transition-slow: 0.5s ease;
@@ -85,7 +88,7 @@ body {
   padding: 0 var(--spacing-lg);
 }
 
-/* Header Styles */
+
 header {
   position: fixed;
   top: 0;
@@ -168,7 +171,7 @@ nav {
   border-radius: var(--radius-sm);
 }
 
-/* Hero Section */
+
 .hero {
   min-height: 100vh;
   display: flex;
@@ -266,7 +269,7 @@ nav {
   animation: slideUp 1s ease 0.9s forwards;
 }
 
-/* Button Styles */
+
 .cta-button {
   padding: var(--spacing-lg) var(--spacing-2xl);
   border: none;
@@ -312,7 +315,8 @@ nav {
   font-size: 1.125rem;
 }
 
-/* Features Section */
+
+
 .features {
   padding: 100px var(--spacing-xl);
   background: var(--white);
@@ -412,7 +416,6 @@ nav {
   color: var(--primary-color);
 }
 
-/* Floating Elements */
 .floating-elements {
   position: absolute;
   top: 0;
@@ -478,7 +481,7 @@ nav {
   }
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .nav-links {
     display: none;
@@ -512,12 +515,12 @@ nav {
   }
 }
 
-/* Smooth scrolling */
+
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
+
 ::-webkit-scrollbar {
   width: 8px;
 }

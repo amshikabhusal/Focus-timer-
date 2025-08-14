@@ -1,21 +1,22 @@
 <?php
-// Database configuration
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'bee');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 
-// Application configuration
+
+
 define('APP_NAME', 'bee');
 define('APP_URL', 'http://localhost');
 define('SESSION_LIFETIME', 86400); // 24 hours
 
-// Security settings
 define('PASSWORD_MIN_LENGTH', 6);
-define('SESSION_COOKIE_SECURE', false); // Set to true in production with HTTPS
+define('SESSION_COOKIE_SECURE', false);
+
 define('SESSION_COOKIE_HTTPONLY', true);
 
-// Initialize database connection
+
+
 try {
     $pdo = new PDO(
         "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",

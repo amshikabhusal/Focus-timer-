@@ -1,6 +1,6 @@
-// Authentication JavaScript
+
 document.addEventListener("DOMContentLoaded", () => {
-  // Password strength indicator
+ 
   const passwordInput = document.getElementById("password")
   const confirmPasswordInput = document.getElementById("confirm_password")
 
@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
-  // Password confirmation validation
+  
+  
   if (confirmPasswordInput) {
     confirmPasswordInput.addEventListener("input", () => {
       validatePasswordMatch()
@@ -24,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
-  // Form validation
+  
   const authForms = document.querySelectorAll(".auth-form")
 
   authForms.forEach((form) => {
@@ -35,7 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
 
-  // Real-time email validation
+ 
+  
   const emailInput = document.getElementById("email")
   if (emailInput) {
     emailInput.addEventListener("blur", function () {
@@ -57,7 +59,8 @@ function calculatePasswordStrength(password) {
 }
 
 function showPasswordStrength(strength) {
-  // Remove existing strength indicator
+  
+  
   const existingIndicator = document.querySelector(".password-strength")
   if (existingIndicator) {
     existingIndicator.remove()
@@ -77,7 +80,8 @@ function showPasswordStrength(strength) {
         <span class="strength-text">${strengthLevels[strength - 1] || "Very Weak"}</span>
     `
 
-  // Add styles
+ 
+    
   indicator.style.cssText = `
         margin-top: 8px;
         font-size: 0.875rem;
@@ -107,7 +111,8 @@ function validatePasswordMatch() {
   const confirmPassword = document.getElementById("confirm_password").value
   const confirmInput = document.getElementById("confirm_password")
 
-  // Remove existing validation message
+
+  
   const existingMessage = confirmInput.parentNode.querySelector(".validation-message")
   if (existingMessage) {
     existingMessage.remove()
@@ -138,7 +143,8 @@ function validateEmail(email) {
   const emailInput = document.getElementById("email")
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-  // Remove existing validation message
+  
+  
   const existingMessage = emailInput.parentNode.querySelector(".validation-message")
   if (existingMessage) {
     existingMessage.remove()
@@ -168,15 +174,18 @@ function validateEmail(email) {
 function validateForm(form) {
   let isValid = true
 
-  // Clear previous validation messages
+
+  
   form.querySelectorAll(".validation-message").forEach((msg) => msg.remove())
 
-  // Reset input styles
+  
+  
   form.querySelectorAll("input").forEach((input) => {
     input.style.borderColor = "#e5e7eb"
   })
 
-  // Validate required fields
+  
+  
   const requiredFields = form.querySelectorAll("input[required]")
 
   requiredFields.forEach((field) => {
@@ -186,19 +195,20 @@ function validateForm(form) {
     }
   })
 
-  // Validate email
+
+  
   const emailField = form.querySelector('input[type="email"]')
   if (emailField && emailField.value && !validateEmail(emailField.value)) {
     isValid = false
   }
 
-  // Validate password match
+  
   const confirmPasswordField = form.querySelector("#confirm_password")
   if (confirmPasswordField && !validatePasswordMatch()) {
     isValid = false
   }
 
-  // Validate password strength
+  
   const passwordField = form.querySelector("#password")
   if (passwordField && passwordField.value.length < 6) {
     showFieldError(passwordField, "Password must be at least 6 characters long")
@@ -222,7 +232,7 @@ function showFieldError(field, message) {
   field.parentNode.appendChild(errorDiv)
 }
 
-// Show/hide password functionality
+
 function togglePasswordVisibility(inputId) {
   const input = document.getElementById(inputId)
   const type = input.getAttribute("type") === "password" ? "text" : "password"

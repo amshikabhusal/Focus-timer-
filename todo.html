@@ -192,11 +192,55 @@
     .edit-buttons button:hover {
       filter: brightness(0.9);
     }
+    
+        .nav-button {
+        
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            backdrop-filter: blur(10px);
+            border: 2px solid #3b82f6;
+            padding: 1.2rem 2.5rem;
+            font-size: 1rem;
+            color: #1e40af;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-button:hover::before {
+            left: 100%;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+          
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.2);
+            border-color: #2563eb;
+            background: linear-gradient(145deg, #dbeafe, #bfdbfe);
+        }
+
   </style>
 </head>
 <body>
   <h1>📝To-Do List</h1>
-
+  
+  
   <div class="stats" aria-live="polite" aria-atomic="true">
     <div id="totalTasks">Total: 0</div>
     <div id="completedTasks">Completed: 0</div>
@@ -228,7 +272,8 @@
   </form>
 
   <div id="tasksContainer" role="list" aria-live="polite"></div>
-
+<br>
+    <a href="moodbar.html" class="nav-button" style="margin-left: 220px;">moodbar</a>
   <script>
     (() => {
       const STORAGE_KEY = "enhancedTodoTasks";
